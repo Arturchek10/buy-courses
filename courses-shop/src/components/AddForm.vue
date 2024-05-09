@@ -5,7 +5,6 @@
       <input type="text" placeholder="введите промокод" v-model="inputText" >
       <button>ок</button>
     </form>
-    <p>{{ text }}</p>
     <button class="esc" @click="emit('close-form')">✖</button>
   </div>
 </template>
@@ -14,7 +13,6 @@
 import {ref} from 'vue'
 const emit = defineEmits(['add-promocode', 'close-form'])
 const inputText = ref('')
-
 
 
 function addPromocode(){

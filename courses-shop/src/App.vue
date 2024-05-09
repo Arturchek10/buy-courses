@@ -1,8 +1,8 @@
 <template>
   <div>
-    <courses-list :courses="courses" @click-on-button="openForm"/>
+    <courses-list v-if="!isLoading" :courses="courses" @click-on-button="openForm"/>
+    <h1 class="loading-text" v-else>Loading...</h1>
     <add-form v-if="formIsOpen" @close-form="closeForm" @add-promocode="addPromocode" /> 
-    
   </div>
 </template>
 
@@ -11,8 +11,8 @@ import CoursesList from "./components/CoursesList.vue"
 import AddForm from "./components/AddForm.vue"
 import {ref} from 'vue'
 
-
 const formIsOpen = ref(false)
+const isLoading = ref(false)
 
 function openForm(){
   formIsOpen.value = true
@@ -30,9 +30,8 @@ function addPromocode(promocode){
     for(let i = 0; i<courses.value.length; i++){
       if (promocode == courses.value[i].promocode){
         courses.value[i].isBought = true
-        setTimeout(function() {alert('вы приобрели курс')}, 1000)
-      } else {
-        
+        isLoading.value = true
+        setTimeout(function() { isLoading.value = false}, 1000)
       }
     }
     closeForm()
@@ -84,3 +83,10 @@ const courses = ref([
   },
 ])
 </script>
+
+<style scoped>
+  .loading-text{
+    text-align: center;
+    margin-top: 10%;
+  }
+</style>
